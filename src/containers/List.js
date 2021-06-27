@@ -17,7 +17,7 @@ const List = () => {
           <Tweet
             key={item._id}
             name={item.user.name}
-            user={item.user.username}
+            username={item.user.username}
             date={date}
             content={item.content}
           />
