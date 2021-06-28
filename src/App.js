@@ -18,6 +18,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@material-ui/core/Container';
 import ListItem from '@material-ui/core/ListItem';
 
+const Login = React.lazy(() => import('./pages/Login'));
+const Home = React.lazy(() => import('./pages/Home'));
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -56,14 +59,16 @@ function App() {
           </Toolbar>
         </AppBar>
         <Container maxWidth="sm">
-          <Switch>
-            <Route path="/login">
-              <AuthForm />
-            </Route>
-            <Route path="/">
-              <List />
-            </Route>
-          </Switch>
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </React.Suspense>
         </Container>
       </Router>
     </>
