@@ -1,5 +1,6 @@
 import React from 'react';
 import List from './containers/List';
+import AuthForm from './containers/AuthForm';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -43,6 +44,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm">
+        <AuthForm />
         <List />
       </Container>
     </>

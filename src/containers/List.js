@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Tweet from '../components/Tweet';
-import { API } from '../api';
+import API from '../api';
 
 const List = () => {
   const [data, setData] = useState([]);
 
+  async function loadList() {
+    try {
+      const { data = [] } = await API.getTweets();
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    API.getTweets().then((response) => setData(response));
+    loadList();
   }, []);
 
   return (
