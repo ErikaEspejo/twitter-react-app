@@ -1,8 +1,10 @@
 import { Button, TextField, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router';
 import React from 'react';
 import API from '../api';
 
 export default function AuthForm() {
+  const history = useHistory();
   async function onSubmit(event) {
     event.preventDefault();
     const { username, password } = event.target.elements;
@@ -11,7 +13,9 @@ export default function AuthForm() {
         username: username.value,
         password: password.value,
       });
-      console.log(data);
+      const { token } = data;
+      localStorage.setItem('token', token);
+      history.push('/');
     } catch (error) {
       console.error(error);
     }

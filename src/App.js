@@ -1,6 +1,4 @@
 import React from 'react';
-import List from './containers/List';
-import AuthForm from './containers/AuthForm';
 import {
   BrowserRouter as Router,
   Switch,
