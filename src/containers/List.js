@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Tweet from '../components/Tweet';
 import API from '../api';
 
 const List = () => {
   const [data, setData] = useState([]);
+  const history = useHistory();
 
   async function loadList() {
     try {
@@ -16,6 +18,10 @@ const List = () => {
     }
   }
 
+  const displayTweet = ({ id }) => {
+    history.push(`/tweets/${id}`);
+  };
+
   useEffect(() => {
     loadList();
   }, []);
@@ -25,13 +31,19 @@ const List = () => {
       {data.map((item) => {
         const date = new Date(item.createdAt).toDateString();
         return (
-          <Tweet
+          <div
             key={item._id}
-            name={item.user.name}
-            username={item.user.username}
-            date={date}
-            content={item.content}
-          />
+            onClick={() => {
+              displayTweet({ id: item._id });
+            }}
+          >
+            <Tweet
+              name={item.user.name}
+              username={item.user.username}
+              date={date}
+              content={item.content}
+            />
+          </div>
         );
       })}
     </>

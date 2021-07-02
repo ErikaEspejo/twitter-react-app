@@ -16,6 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@material-ui/core/Container';
 import ListItem from '@material-ui/core/ListItem';
 
+import TweetDetails from './pages/TweetDetails';
+
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
 
@@ -61,6 +63,9 @@ function App() {
             <Switch>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/tweets/:id">
+                <TweetDetails />
               </Route>
               <Route path="/">
                 <Home />
