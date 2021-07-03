@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,6 +18,7 @@ import ListItem from '@material-ui/core/ListItem';
 import TweetDetails from './pages/TweetDetails';
 import ProtectedRoute from './containers/ProtectedRoute';
 import UserBar from './containers/UserBar';
+import UserContext from './containers/UserContext';
 
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
@@ -36,43 +37,51 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  const [user, setUser] = useState({});
   return (
     <>
-      <Router>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <ListItem component={NavLink} to="/" button>
-              <Typography variant="h6" className={classes.title}>
-                React Twitter
-              </Typography>
-            </ListItem>
-            <UserBar />
-          </Toolbar>
-        </AppBar>
-        <Container maxWidth="sm">
-          <React.Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <ProtectedRoute path="/tweets/:id">
-                <TweetDetails />
-              </ProtectedRoute>
-              <ProtectedRoute path="/">
-                <Home />
-              </ProtectedRoute>
-            </Switch>
-          </React.Suspense>
-        </Container>
-      </Router>
+      <UserContext.Provider
+        value={{
+          user,
+          setUser,
+        }}
+      >
+        <Router>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
+              <ListItem component={NavLink} to="/" button>
+                <Typography variant="h6" className={classes.title}>
+                  React Twitter
+                </Typography>
+              </ListItem>
+              <UserBar />
+            </Toolbar>
+          </AppBar>
+          <Container maxWidth="sm">
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <ProtectedRoute path="/tweets/:id">
+                  <TweetDetails />
+                </ProtectedRoute>
+                <ProtectedRoute path="/">
+                  <Home />
+                </ProtectedRoute>
+              </Switch>
+            </React.Suspense>
+          </Container>
+        </Router>
+      </UserContext.Provider>
     </>
   );
 }
