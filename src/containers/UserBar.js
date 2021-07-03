@@ -3,7 +3,7 @@ import { isAuthenticated, clearSession } from '../utils/auth';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import { NavLink, useHistory } from 'react-router-dom';
-import UserContext from '../containers/UserContext';
+import UserContext, { UserConsumer } from '../containers/UserContext';
 
 export default function UserBar() {
   const history = useHistory();
@@ -11,13 +11,13 @@ export default function UserBar() {
 
   return isAuthenticated() ? (
     <>
-      <UserContext.Consumer>
+      <UserConsumer>
         {({ user }) => (
           <ListItem component={NavLink} to="/profile" button>
             {user.name}
           </ListItem>
         )}
-      </UserContext.Consumer>
+      </UserConsumer>
       <Button
         onClick={() => {
           clearSession();

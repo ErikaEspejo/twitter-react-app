@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,7 +18,7 @@ import ListItem from '@material-ui/core/ListItem';
 import TweetDetails from './pages/TweetDetails';
 import ProtectedRoute from './containers/ProtectedRoute';
 import UserBar from './containers/UserBar';
-import UserContext from './containers/UserContext';
+import { UserProvider } from './containers/UserContext';
 
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
@@ -37,15 +37,10 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [user, setUser] = useState({});
+
   return (
     <>
-      <UserContext.Provider
-        value={{
-          user,
-          setUser,
-        }}
-      >
+      <UserProvider>
         <Router>
           <AppBar position="static">
             <Toolbar>
@@ -81,7 +76,7 @@ function App() {
             </React.Suspense>
           </Container>
         </Router>
-      </UserContext.Provider>
+      </UserProvider>
     </>
   );
 }
