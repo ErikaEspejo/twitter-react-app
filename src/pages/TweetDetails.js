@@ -31,7 +31,7 @@ export default function TweetDetails() {
         name={tweet.user.name}
         username={tweet.user.username}
         content={tweet.content}
-        date={new Date(tweet.createdAt).toDateString()}
+        date={tweet.date}
       />
     )
   );

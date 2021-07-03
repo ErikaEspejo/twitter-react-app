@@ -1,5 +1,9 @@
 const KEY = 'token';
 
+export function getSession() {
+  return localStorage.getItem(KEY);
+}
+
 export function setSession({ data }) {
   localStorage.setItem(KEY, data);
 }
