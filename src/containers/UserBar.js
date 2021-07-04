@@ -13,7 +13,7 @@ export default function UserBar() {
     <>
       <UserConsumer>
         {({ user }) => (
-          <ListItem component={NavLink} to="/profile" button>
+          <ListItem component={NavLink} to={`/profile/${user.id}`} button>
             {user.name}
           </ListItem>
         )}
