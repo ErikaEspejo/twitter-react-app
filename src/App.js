@@ -14,14 +14,15 @@ import {
   Route,
   NavLink,
 } from 'react-router-dom';
-import TweetDetails from './pages/TweetDetails';
-import Profile from './pages/Profile';
 import ProtectedRoute from './containers/ProtectedRoute';
 import UserBar from './containers/UserBar';
 import { UserProvider } from './containers/UserContext';
 
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
+const TweetDetails = React.lazy(() => import('./pages/TweetDetails'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const EditProfile = React.lazy(() => import('./pages/EditProfile'));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,8 +66,11 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
-              <ProtectedRoute path="/profile/:id">
+              <ProtectedRoute path="/profile/:id" exact>
                 <Profile />
+              </ProtectedRoute>
+              <ProtectedRoute path="/profile/:id/edit">
+                <EditProfile />
               </ProtectedRoute>
               <ProtectedRoute path="/tweets/:id">
                 <TweetDetails />

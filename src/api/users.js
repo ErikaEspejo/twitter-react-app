@@ -34,3 +34,20 @@ export async function getUser({ id }) {
   const { data } = response.data;
   return formatUser(data);
 }
+
+export async function updateUser({
+  id,
+  name,
+  username,
+  email,
+  password,
+  passwordConfirmation,
+}) {
+  return await http.put(`/users/${id}`, {
+    name,
+    username,
+    email,
+    password,
+    passwordConfirmation,
+  });
+}
