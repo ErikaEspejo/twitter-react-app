@@ -3,16 +3,21 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
 import Tweet from '../components/Tweet';
+import Loader from '../components/Loader';
 import API from '../api';
 
 const useStyles = makeStyles((theme) => ({
   spacer: {
     padding: theme.spacing(1),
+  },
+  divider: {
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -65,7 +70,12 @@ export default function TweetDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  if (!tweet) return null;
+  if (!tweet)
+    return (
+      <Card className={`${classes.spacer} ${classes.divider}`}>
+        <Loader />
+      </Card>
+    );
 
   return (
     <>
