@@ -36,10 +36,14 @@ function EmailIcon(props) {
 export default function UserDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const { user } = useUser({ id });
+  const { user, isLoading } = useUser({ id });
 
   function editProfile() {
     history.push(`/profile/${id}/edit`);
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>;
   }
 
   return (

@@ -1,29 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import API from '../api';
 
 export default function useUser({ id }) {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  async function loadUser() {
+  const loadUser = useCallback(async () => {
     try {
+      setIsLoading(true);
       const data = await API.getUser({ id });
 
       if (data) {
         setUser(data);
       }
     } catch (error) {
+      setError(error?.message);
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  }, [id]);
 
   useEffect(() => {
     if (id !== undefined) {
       loadUser();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, loadUser]);
 
   return {
     user,
+    error,
+    isLoading,
   };
 }
