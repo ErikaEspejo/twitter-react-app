@@ -44,6 +44,17 @@ export default function TweetDetails() {
     }
   }
 
+  async function onLike(event) {
+    try {
+      await API.likeTweet({
+        tweetId: id,
+      });
+      await loadTweet();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     if (id !== undefined) {
       loadTweet();
@@ -57,10 +68,14 @@ export default function TweetDetails() {
     <>
       {tweet && (
         <Tweet
+          id={tweet.id}
           name={tweet.user.name}
           username={tweet.user.username}
           content={tweet.content}
           date={tweet.date}
+          commentsCount={tweet.comments.length}
+          likes={tweet.likes}
+          onLike={onLike}
         />
       )}
       <form onSubmit={onComment}>

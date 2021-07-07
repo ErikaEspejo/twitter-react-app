@@ -29,6 +29,31 @@ const List = () => {
     history.push(`/tweets/${id}`);
   };
 
+  async function onLike(event, id) {
+    event.stopPropagation();
+    try {
+      await API.likeTweet({
+        tweetId: id,
+      });
+      const tweet = await API.getTweet({ id });
+      const newList = data.map((item) => {
+        if (item.id === id) {
+          // return {
+          //   ...item,
+          //   likes: item.likes + 1
+          // };
+          return tweet;
+        } else {
+          return item;
+        }
+      });
+      setData(newList);
+      // await loadList();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     loadList();
   }, []);
@@ -36,7 +61,7 @@ const List = () => {
   return (
     <>
       {error && <Alert severity="error">{error}</Alert>}
-      {data.map(({ id, user, date, content, comments }) => {
+      {data.map(({ id, user, date, content, comments, likes }) => {
         return (
           <div
             key={id}
@@ -45,11 +70,14 @@ const List = () => {
             }}
           >
             <Tweet
+              id={id}
               name={user.name}
               username={user.username}
               date={date}
               content={content}
+              likes={likes}
               commentsCount={comments.length}
+              onLike={onLike}
             />
           </div>
         );
